@@ -1,16 +1,14 @@
+# Use an official Nginx runtime as a parent image
 FROM nginx:alpine
 
-WORKDIR /app
-
-COPY index.html .
-
-ENV NODE_OPTIONS=--max_old_space_size=16384
-
+# Copy certs folder
 COPY /certs /etc/nginx/certs
 
+# Remove the default Nginx configuration file & add our configuration file
 COPY /nginx.conf /etc/nginx/conf.d/default.conf
 
-WORKDIR /usr/share/nginx/html
+# Copy the index.html file to the Nginx html directory
+COPY /index.html /usr/share/nginx/html/
 
 EXPOSE 80-443
 
